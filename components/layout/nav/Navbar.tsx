@@ -1,7 +1,7 @@
 import { Box, HStack, IconButton } from '@chakra-ui/react';
 import NavLink from './NavLink';
-import { AiOutlineMenu } from 'react-icons/ai';
 import { FaShoppingBasket } from 'react-icons/fa'
+import Menu from './Menu';
 
 function Nav() {
   return (
@@ -11,7 +11,7 @@ function Nav() {
       alighItems="center"
     >
       <HStack>
-        <IconButton aria-label="open menu" icon={<AiOutlineMenu />} />
+        <Menu />
         <NavLink href="/" text="Home" />
       </HStack>
 
