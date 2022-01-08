@@ -8,7 +8,7 @@ interface NavLinkProps {
 
 function NavLink({ href, text }: NavLinkProps) {
   return (
-    <NextLink href={href}>
+    <NextLink href={href} passHref>
       <Link>
         <Text fontSize="2xl">
           {text}
