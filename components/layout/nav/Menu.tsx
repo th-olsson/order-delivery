@@ -13,14 +13,12 @@ import {
 } from '@chakra-ui/react'
 import NavLink from './NavLink';
 import { AiOutlineMenu } from 'react-icons/ai';
+import { strToSlug } from '../../../utils/helpers';
 
 function Menu() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [menuLinks] = useState(['See all products', 'Category 1', 'Category 2', 'About', 'Contact']);
 
-  function strToHref(str: string) {
-    return str.toLowerCase().replace(' ', '-');
-  }
   return (
     <>
       <IconButton
@@ -41,7 +39,7 @@ function Menu() {
           <DrawerBody>
             {
               menuLinks.map((link) => (
-                <NavLink href={strToHref(link)} key={link} text={link} />
+                <NavLink href={strToSlug(link)} key={link} text={link} />
               ))
             }
           </DrawerBody>
