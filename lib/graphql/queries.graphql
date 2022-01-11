@@ -1,6 +1,7 @@
 # Get all products
-query GetProducts {
+query GetAllProducts {
   products {
+    id
     name
     description
     price
@@ -8,7 +9,7 @@ query GetProducts {
   }
 }
 
-# Initial categories with products (should maybe later be paginated)
+# Categories with products
 query GetCategoriesWithProducts {
   categories {
     id
@@ -23,8 +24,19 @@ query GetCategoriesWithProducts {
   }
 }
 
+ query GetSingleProduct($id: ID!) {
+    product(where: { id: $id }) {
+      id
+      name
+      price
+      description
+    }
+  }
+
 #TODO: Get products of a specific variable category
 
 #TODO: Get front page products
+
+#TODO: With pagination
 
 # Featured products / Featured categories

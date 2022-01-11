@@ -1,12 +1,12 @@
 import { Heading } from '@chakra-ui/react';
-import type { NextPage } from 'next'
 import Head from 'next/head'
 import NextLink from 'next/link';
-import Nav from '../components/layout/nav/Navbar'
-import client from "../lib/apolloClient";
-import { GET_CATEGORIES_WITH_PRODUCTS } from "../lib/graphql";
+import apolloClient from "lib/apolloClient";
+import Nav from 'components/layout/nav/Navbar'
+import { GetCategoriesWithProductsQuery } from 'lib/graphql/generated';
+import { GET_CATEGORIES_WITH_PRODUCTS } from "lib/graphql/queries";
 
-const Home: NextPage = ({ categoriesWithProducts }: any) => {
+function Home({ categories }: GetCategoriesWithProductsQuery) {
   return (
     <>
       <Head>
@@ -16,7 +16,7 @@ const Home: NextPage = ({ categoriesWithProducts }: any) => {
       <Heading as="h1">Order delivery</Heading>
 
       {/* TODO: make separate components */}
-      {categoriesWithProducts.map((category: any) => (
+      {categories?.map((category: any) => (
         <div key={category.id}>
           {/* TODO: don't display category if empty */}
           <h2>{category.name}</h2>
@@ -37,21 +37,21 @@ const Home: NextPage = ({ categoriesWithProducts }: any) => {
 }
 
 export async function getStaticProps() {
-  const { data, error } = await client.query({
+  const { data: { categories } } = await apolloClient.query<GetCategoriesWithProductsQuery>({
     query: GET_CATEGORIES_WITH_PRODUCTS
   });
 
-  let categoriesWithProducts;
-
-  if (data) {
-    categoriesWithProducts = data.categories;
-  } else if (error) {
-    console.log(error);
+  if (!categories) {
+    return {
+      notFound: true,
+    }
   }
+
+  console.log(categories);
 
   return {
     props: {
-      categoriesWithProducts,
+      categories,
     },
   };
 }
