@@ -1,6 +1,7 @@
 import { Heading } from '@chakra-ui/react';
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import NextLink from 'next/link';
 import Nav from '../components/layout/nav/Navbar'
 import client from "../lib/apolloClient";
 import { GET_CATEGORIES_WITH_PRODUCTS } from "../lib/graphql";
@@ -22,7 +23,9 @@ const Home: NextPage = ({ categoriesWithProducts }: any) => {
           <ul>
             {category.products.map((product: any) => (
               <li key={product.id}>
-                <p>{product.title}</p>
+                <NextLink href={`/product/${product.id}`} passHref>
+                  <a><p>{product.name}</p></a>
+                </NextLink>
                 <p>{product.price}</p>
               </li>
             ))}
@@ -42,7 +45,6 @@ export async function getStaticProps() {
 
   if (data) {
     categoriesWithProducts = data.categories;
-    console.log(categoriesWithProducts);
   } else if (error) {
     console.log(error);
   }
