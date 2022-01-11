@@ -3,10 +3,11 @@ import { gql } from "@apollo/client";
 export const GET_PRODUCTS = gql`
   query GetProducts {
     products {
-      title
+      id
+      name
       description
       price
-      images
+      # images
     }
   }
 `;
@@ -16,8 +17,8 @@ export const GET_CATEGORY_NAMES = gql`
     categories {
       id
       name
-      }
     }
+  }
 `;
 
 export const GET_CATEGORIES_WITH_PRODUCTS = gql`
@@ -27,7 +28,7 @@ export const GET_CATEGORIES_WITH_PRODUCTS = gql`
       name
       products {
         id
-        title
+        name
         description
         price
         # images
@@ -36,3 +37,13 @@ export const GET_CATEGORIES_WITH_PRODUCTS = gql`
   }
 `;
 
+export const PRODUCT_QUERY = gql`
+  query ProductQuery($id: ID!) {
+    product(where: { id: $id }) {
+      id
+      name
+      price
+      description
+    }
+  }
+`;

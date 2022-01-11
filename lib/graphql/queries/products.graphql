@@ -1,0 +1,30 @@
+# Get all products
+query GetProducts {
+  products {
+    name
+    description
+    price
+    # images
+  }
+}
+
+# Initial categories with products (should maybe later be paginated)
+query GetCategoriesWithProducts {
+  categories {
+    id
+    name
+    products {
+      id
+      name
+      description
+      price
+      # images
+    }
+  }
+}
+
+#TODO: Get products of a specific variable category
+
+#TODO: Get front page products
+
+# Featured products / Featured categories
