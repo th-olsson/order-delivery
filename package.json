@@ -24,6 +24,9 @@
     "react-icons": "^4.3.1"
   },
   "devDependencies": {
+    "apollo": "2.33.4",
+    "apollo-codegen-core": "0.40.3",
+    "apollo-language-server": "1.26.3",
     "@babel/core": "^7.16.7",
     "@storybook/addon-actions": "^6.4.9",
     "@storybook/addon-essentials": "^6.4.9",
