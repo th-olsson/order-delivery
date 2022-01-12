@@ -24,14 +24,33 @@ query GetCategoriesWithProducts {
   }
 }
 
- query GetSingleProduct($id: ID!) {
-    product(where: { id: $id }) {
+query GetSingleProduct($id: ID!) {
+  product(where: { id: $id }) {
+    id
+    name
+    price
+    description
+  }
+}
+
+query GetCategoriesNames {
+  categories {
+    id
+    name
+  }
+}
+
+query GetSingleCategory($id: ID!) {
+  category(where: { id: $id }) {
+    id
+    name
+    products {
       id
       name
       price
-      description
     }
   }
+}
 
 #TODO: Get products of a specific variable category
 

@@ -12,8 +12,8 @@ export const GET_ALL_PRODUCTS = gql`
   }
 `;
 
-export const GET_CATEGORY_NAMES = gql`
-  query GetCategories {
+export const GET_CATEGORIES_NAMES = gql`
+  query GetCategoriesNames {
     categories {
       id
       name
@@ -43,6 +43,20 @@ export const GET_SINGLE_PRODUCT = gql`
       name
       price
       description
+    }
+  }
+`;
+
+export const GET_SINGLE_CATEGORY = gql`
+  query GetSingleCategory($id: ID!) {
+    category(where: { id: $id }) {
+      id
+      name
+      products {
+        id,
+        name,
+        price,
+      }
     }
   }
 `;

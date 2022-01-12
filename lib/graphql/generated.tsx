@@ -1158,6 +1158,18 @@ export type GetSingleProductQueryVariables = Exact<{
 
 export type GetSingleProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, name?: string | null | undefined, price?: any | null | undefined, description?: string | null | undefined } | null | undefined };
 
+export type GetCategoriesNamesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCategoriesNamesQuery = { __typename?: 'Query', categories?: Array<{ __typename?: 'Category', id: string, name?: string | null | undefined }> | null | undefined };
+
+export type GetSingleCategoryQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetSingleCategoryQuery = { __typename?: 'Query', category?: { __typename?: 'Category', id: string, name?: string | null | undefined, products?: Array<{ __typename?: 'Product', id: string, name?: string | null | undefined, price?: any | null | undefined }> | null | undefined } | null | undefined };
+
 
 export const GetAllProductsDocument = gql`
     query GetAllProducts {
@@ -1275,3 +1287,79 @@ export function useGetSingleProductLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetSingleProductQueryHookResult = ReturnType<typeof useGetSingleProductQuery>;
 export type GetSingleProductLazyQueryHookResult = ReturnType<typeof useGetSingleProductLazyQuery>;
 export type GetSingleProductQueryResult = Apollo.QueryResult<GetSingleProductQuery, GetSingleProductQueryVariables>;
+export const GetCategoriesNamesDocument = gql`
+    query GetCategoriesNames {
+  categories {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useGetCategoriesNamesQuery__
+ *
+ * To run a query within a React component, call `useGetCategoriesNamesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCategoriesNamesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCategoriesNamesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCategoriesNamesQuery(baseOptions?: Apollo.QueryHookOptions<GetCategoriesNamesQuery, GetCategoriesNamesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCategoriesNamesQuery, GetCategoriesNamesQueryVariables>(GetCategoriesNamesDocument, options);
+      }
+export function useGetCategoriesNamesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCategoriesNamesQuery, GetCategoriesNamesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCategoriesNamesQuery, GetCategoriesNamesQueryVariables>(GetCategoriesNamesDocument, options);
+        }
+export type GetCategoriesNamesQueryHookResult = ReturnType<typeof useGetCategoriesNamesQuery>;
+export type GetCategoriesNamesLazyQueryHookResult = ReturnType<typeof useGetCategoriesNamesLazyQuery>;
+export type GetCategoriesNamesQueryResult = Apollo.QueryResult<GetCategoriesNamesQuery, GetCategoriesNamesQueryVariables>;
+export const GetSingleCategoryDocument = gql`
+    query GetSingleCategory($id: ID!) {
+  category(where: {id: $id}) {
+    id
+    name
+    products {
+      id
+      name
+      price
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetSingleCategoryQuery__
+ *
+ * To run a query within a React component, call `useGetSingleCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSingleCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSingleCategoryQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetSingleCategoryQuery(baseOptions: Apollo.QueryHookOptions<GetSingleCategoryQuery, GetSingleCategoryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSingleCategoryQuery, GetSingleCategoryQueryVariables>(GetSingleCategoryDocument, options);
+      }
+export function useGetSingleCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSingleCategoryQuery, GetSingleCategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSingleCategoryQuery, GetSingleCategoryQueryVariables>(GetSingleCategoryDocument, options);
+        }
+export type GetSingleCategoryQueryHookResult = ReturnType<typeof useGetSingleCategoryQuery>;
+export type GetSingleCategoryLazyQueryHookResult = ReturnType<typeof useGetSingleCategoryLazyQuery>;
+export type GetSingleCategoryQueryResult = Apollo.QueryResult<GetSingleCategoryQuery, GetSingleCategoryQueryVariables>;
