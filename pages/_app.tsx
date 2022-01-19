@@ -4,14 +4,17 @@ import { ChakraProvider } from "@chakra-ui/react"
 import { ApolloProvider } from '@apollo/client'
 import apolloClient from 'lib/apolloClient'
 import Layout from 'components/layout/Layout'
+import { CartContextProvider } from 'contexts/CartContext'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider>
       <ApolloProvider client={apolloClient}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <CartContextProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </CartContextProvider>
       </ApolloProvider>
     </ChakraProvider>
   )
