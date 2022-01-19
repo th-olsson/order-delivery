@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import {
   Button,
   Drawer,
@@ -10,29 +10,16 @@ import {
   DrawerCloseButton,
   useDisclosure,
   IconButton,
-  Text
+  Text,
+  HStack,
+  Box
 } from '@chakra-ui/react'
 import { FaShoppingBasket } from 'react-icons/fa'
+import { CartContext } from 'contexts/CartContext';
 
 function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [products] = useState([
-    {
-      id: 1,
-      title: 'Product 1',
-      price: 100,
-    },
-    {
-      id: 2,
-      title: 'Product 2',
-      price: 200,
-    },
-    {
-      id: 3,
-      title: 'Product 3',
-      price: 300,
-    }
-  ]);
+  const { cart, removeItem, addItem } = useContext(CartContext)
 
   return (
     <>
@@ -53,14 +40,22 @@ function Cart() {
           <DrawerHeader>Cart</DrawerHeader>
           <DrawerBody>
             { //TODO: Make separate component for product
-              products.map(({ id, title, price }) => (
-                <div className='product-cart' key={id}>
-                  <Text fontSize="2xl">{title} {price}</Text>
-                </div>
+              cart.map(({ id, name, price, quantity }) => (
+                <Box className='cart-item' key={id}>
+                  <Text fontSize="2xl">{name} {price * quantity} {quantity}</Text>
+                  <HStack>
+                    <Button onClick={() => { removeItem(id) }}>Remove one</Button>
+                    <Text>{quantity}</Text>
+                    <Button onClick={() => { addItem(id, name, price) }}>Add one</Button>
+                  </HStack>
+                </Box>
               ))
             }
           </DrawerBody>
           <DrawerFooter>
+            <Button onClick={() => { console.log(cart) }}>
+              Log cart context
+            </Button>
             <Button variant='outline' mr={3} onClick={onClose}>
               Close
             </Button>

@@ -1,6 +1,6 @@
 import { createContext, useState, ReactNode } from 'react';
 
-// Item definitions
+// Item definition
 interface Item {
   id: string;
   name: string;
@@ -34,30 +34,48 @@ export function CartContextProvider({
 }: CartContextProviderProps) {
   const [cart, setCart] = useState<Cart>(
     [ // TODO: load from local storage
-      { id: 'test_id_1', name: 'product one', price: 100, quantity: 1 },
-      { id: 'test_id_2', name: 'product two', price: 200, quantity: 1 },
-      { id: 'test_id_3', name: 'product three', price: 300, quantity: 1 },
     ]
   );
 
   function addItem(id: Item['id'], name: Item['name'], price: Item['price']) {
-    // TODO: If item already exists in cart, increment quantity
-    const quantity = 1;
-    // Adds item to context state
-    const newItem = { id, name, price, quantity };
-    setCart([...cart, newItem]);
-
-    // TODO: Update local storage
+    // If item already exists in cart, increment quantity
+    const item = cart.find(item => item.id === id);
+    if (item) {
+      const newCart = cart.map(item => {
+        if (item.id === id) {
+          item.quantity += 1;
+          return item;
+        }
+        return item;
+      });
+      setCart(newCart);
+    } else { // If item does not exist in cart, add it
+      const quantity = 1;
+      const newItem = { id, name, price, quantity };
+      setCart([...cart, newItem]);
+    }
   }
 
   function removeItem(id: Item['id']) {
-    // TODO: If item exists in cart, decrement quantity
-
-    // Removes item from context state
-    const newCart = cart.filter(item => item.id !== id);
-    setCart(newCart);
-
+    // If item exists in cart, decrement quantity or remove item
+    const item = cart.find(item => item.id === id);
+    if (item) {
+      if (item.quantity <= 1) { // If item quantity is 1 or less, remove item from cart
+        const newCart = cart.filter(item => item.id !== id);
+        setCart(newCart);
+      } else {  // If item quantity is more than 1, decrement quantity
+        const newCart = cart.map(item => {
+          if (item.id === id) {
+            item.quantity -= 1;
+            return item;
+          }
+          return item;
+        });
+        setCart(newCart);
+      }
+    }
     // TODO: Update local storage
+    return;
   }
 
   const logCart = () => {
@@ -65,7 +83,6 @@ export function CartContextProvider({
   }
 
   const value = { cart, addItem, removeItem, logCart };
-
 
   return (
     <CartContext.Provider value={value} >
