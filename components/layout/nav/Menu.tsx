@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Button,
   Drawer,
@@ -13,11 +12,17 @@ import {
 } from '@chakra-ui/react'
 import NavLink from './NavLink';
 import { AiOutlineMenu } from 'react-icons/ai';
-import { strToSlug } from '../../../utils/helpers';
+import { useQuery } from '@apollo/client';
+import { GetCategoriesNamesQuery, GetCategoriesNamesQueryVariables } from 'lib/graphql/generated';
+import { GET_CATEGORIES_NAMES } from 'lib/graphql/queries';
 
 function Menu() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [menuLinks] = useState(['See all products', 'Category 1', 'Category 2', 'About', 'Contact']);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { data, loading } = useQuery<GetCategoriesNamesQuery, GetCategoriesNamesQueryVariables>(
+    GET_CATEGORIES_NAMES,
+  );
+
+  const categories = data?.categories;
 
   return (
     <>
@@ -37,13 +42,16 @@ function Menu() {
           <DrawerCloseButton />
           <DrawerHeader>Menu</DrawerHeader>
           <DrawerBody>
+            <NavLink href='/' text='Home' />
+            {loading && <div>Categories loading...</div>}
             {
-              menuLinks.map((link) => (
-                <NavLink href={strToSlug(link)} key={link} text={link} />
+              categories && categories?.map(category => (
+                <NavLink href={`/category/${category?.id}`} key={category?.id} text={category?.name!} />
               ))
             }
           </DrawerBody>
           <DrawerFooter>
+            <Button onClick={() => { console.log(data); console.log('loading', loading); console.log('categories', categories) }}>Log test</Button>
             <Button variant='outline' mr={3} onClick={onClose}>
               Close
             </Button>
