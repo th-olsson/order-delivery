@@ -1,4 +1,5 @@
 import { GetStaticPropsContext } from "next";
+import { Link as ChakraLink } from '@chakra-ui/react';
 import NextLink from "next/link";
 import Image from "next/image";
 import apolloClient from "lib/apolloClient";
@@ -9,7 +10,9 @@ function SingleCategory({ category }: GetSingleCategoryQuery) {
   return (
     <>
       <NextLink href="/" passHref>
-        <a>Go back</a>
+        <ChakraLink>
+          <a>Go back</a>
+        </ChakraLink>
       </NextLink>
       <h2>{category?.name}</h2>
       {category?.image &&
@@ -24,16 +27,18 @@ function SingleCategory({ category }: GetSingleCategoryQuery) {
       {/* Display products of category */}
       {category?.products?.map((product: any) => (
         <li key={product.id}>
-          {product.image &&
-            <Image
-              height="100"
-              width="100"
-              src={`${process.env.NEXT_PUBLIC_HOST_URL}${product.image.url}`}
-              alt={`${product.name} product image`}
-            />
-          }
           <NextLink href={`/product/${product.id}`} passHref>
-            <a><p>{product.name}</p></a>
+            <ChakraLink>
+              {product.image &&
+                <Image
+                  height="100"
+                  width="100"
+                  src={`${process.env.NEXT_PUBLIC_HOST_URL}${product.image.url}`}
+                  alt={`${product.name} product image`}
+                />
+              }
+              <a><p>{product.name}</p></a>
+            </ChakraLink>
           </NextLink>
           <p>{product.price}</p>
         </li>
