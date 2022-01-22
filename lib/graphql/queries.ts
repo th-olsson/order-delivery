@@ -35,6 +35,7 @@ export const GET_CATEGORIES_WITH_PRODUCTS = gql`
         id
         name
         description
+        price
         image {
           url
         }
