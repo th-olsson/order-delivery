@@ -12,10 +12,12 @@ import {
   IconButton,
   Text,
   HStack,
-  Box
+  Box,
+  Link
 } from '@chakra-ui/react'
 import { FaShoppingBasket } from 'react-icons/fa'
 import { CartContext } from 'contexts/CartContext';
+import NextLink from 'next/link';
 
 function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -42,7 +44,7 @@ function Cart() {
             { //TODO: Make separate component for product
               cart.map(({ id, name, price, quantity }) => (
                 <Box className='cart-item' key={id}>
-                  <Text fontSize="2xl">{name} {price * quantity} {quantity}</Text>
+                  <Text fontSize="2xl">{name} {price * quantity} </Text>
                   <HStack>
                     <Button onClick={() => { removeItem(id) }}>Remove one</Button>
                     <Text>{quantity}</Text>
@@ -53,7 +55,12 @@ function Cart() {
             }
           </DrawerBody>
           <DrawerFooter>
-            <Button onClick={() => { console.log(cart) }}>
+            <NextLink href="/checkout" passHref>
+              <Link>
+                <Button onClick={onClose}>Checkout</Button>
+              </Link>
+            </NextLink>
+            <Button onClick={() => { console.log('cart', cart) }}>
               Log cart context
             </Button>
             <Button variant='outline' mr={3} onClick={onClose}>
