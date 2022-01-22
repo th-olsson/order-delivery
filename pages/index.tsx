@@ -1,9 +1,13 @@
 import { Heading } from '@chakra-ui/react';
 import Head from 'next/head'
 import NextLink from 'next/link';
+import Image from 'next/image';
 import apolloClient from "lib/apolloClient";
 import { GetCategoriesWithProductsQuery } from 'lib/graphql/generated';
 import { GET_CATEGORIES_WITH_PRODUCTS } from "lib/graphql/queries";
+
+const host = process.env.NEXT_PUBLIC_HOST_URL || '';
+console.log(host)
 
 function Home({ categories }: GetCategoriesWithProductsQuery) {
 
@@ -15,15 +19,33 @@ function Home({ categories }: GetCategoriesWithProductsQuery) {
       <Heading as="h1">Order delivery</Heading>
 
       {/* TODO: make separate components */}
-      {categories?.map((category: any) => (
+      {categories?.map((category) => (
         <div key={category.id}>
           {/* TODO: don't display category if empty */}
           <NextLink href={`/category/${category.id}`} passHref>
             <a><h2>{category.name}</h2></a>
           </NextLink>
+
+          {category.image &&
+            <Image
+              height="100"
+              width="100"
+              src={`${host}${category.image.url}`}
+              alt={`${category.name} category image`}
+            />
+          }
+
           <ul>
-            {category.products.map((product: any) => (
+            {category.products?.map((product) => (
               <li key={product.id}>
+                {product.image &&
+                  <Image
+                    height="100"
+                    width="100"
+                    src={`${host}${product.image.url}`}
+                    alt={`${product.name} product image`}
+                  />
+                }
                 <NextLink href={`/product/${product.id}`} passHref>
                   <a><p>{product.name}</p></a>
                 </NextLink>
