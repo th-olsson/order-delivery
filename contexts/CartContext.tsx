@@ -5,6 +5,7 @@ interface Item {
   id: string;
   name: string;
   price: number;
+  imageUrl: string | null | undefined;
   quantity: number;
 };
 
@@ -13,7 +14,7 @@ type Cart = Item[];
 
 interface CartContextProps {
   cart: Cart;
-  addItem: (id: Item['id'], name: Item['name'], price: Item['price']) => void;
+  addItem: (id: Item['id'], name: Item['name'], price: Item['price'], imageUrl: Item['imageUrl']) => void;
   removeItem: (id: Item['id']) => void;
   logCart: () => void;
 }
@@ -37,7 +38,7 @@ export function CartContextProvider({
     ]
   );
 
-  function addItem(id: Item['id'], name: Item['name'], price: Item['price']) {
+  const addItem = (id: Item['id'], name: Item['name'], price: Item['price'], imageUrl: Item['imageUrl']) => {
     // If item already exists in cart, increment quantity
     const item = cart.find(item => item.id === id);
     if (item) {
@@ -51,12 +52,13 @@ export function CartContextProvider({
       setCart(newCart);
     } else { // If item does not exist in cart, add it
       const quantity = 1;
-      const newItem = { id, name, price, quantity };
+      const newItem = { id, name, price, imageUrl, quantity };
       setCart([...cart, newItem]);
     }
   }
 
-  function removeItem(id: Item['id']) {
+  const removeItem = (id: Item['id']) => {
+
     // If item exists in cart, decrement quantity or remove item
     const item = cart.find(item => item.id === id);
     if (item) {
@@ -73,16 +75,19 @@ export function CartContextProvider({
         });
         setCart(newCart);
       }
+
+      // TODO: Update local storage
+      return;
     }
-    // TODO: Update local storage
-    return;
   }
 
   const logCart = () => {
     console.log('Cart items:', cart);
   }
 
-  const value = { cart, addItem, removeItem, logCart };
+  const value = {
+    cart, addItem, removeItem, logCart
+  }
 
   return (
     <CartContext.Provider value={value} >

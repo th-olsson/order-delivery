@@ -16,7 +16,7 @@ function SingleProduct({ product }: GetSingleProductQuery) {
     // Add to local storage
 
     // Add to cart context
-    addItem(product?.id!, product?.name!, product?.price!);
+    addItem(product?.id!, product?.name!, product?.price!, product?.image?.url);
 
     // Display a toast message
     addCartToast({

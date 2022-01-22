@@ -18,6 +18,7 @@ import {
 import { FaShoppingBasket } from 'react-icons/fa'
 import { CartContext } from 'contexts/CartContext';
 import NextLink from 'next/link';
+import Image from 'next/image';
 
 function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -42,13 +43,20 @@ function Cart() {
           <DrawerHeader>Cart</DrawerHeader>
           <DrawerBody>
             { //TODO: Make separate component for product
-              cart.map(({ id, name, price, quantity }) => (
+              cart.map(({ id, name, price, quantity, imageUrl }) => (
                 <Box className='cart-item' key={id}>
                   <Text fontSize="2xl">{name} {price * quantity} </Text>
+                  {imageUrl &&
+                    <Image
+                      height="40"
+                      width="40"
+                      src={`${process.env.NEXT_PUBLIC_HOST_URL}${imageUrl}`}
+                      alt={`${name} product image`}
+                    />}
                   <HStack>
                     <Button onClick={() => { removeItem(id) }}>Remove one</Button>
                     <Text>{quantity}</Text>
-                    <Button onClick={() => { addItem(id, name, price) }}>Add one</Button>
+                    <Button onClick={() => { addItem(id, name, price, imageUrl) }}>Add one</Button>
                   </HStack>
                 </Box>
               ))
