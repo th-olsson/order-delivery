@@ -1,10 +1,9 @@
 import { GetStaticPropsContext } from "next";
 import NextLink from "next/link";
+import Image from "next/image";
 import apolloClient from "lib/apolloClient";
 import { GetCategoriesWithProductsQuery, GetSingleCategoryQuery } from "lib/graphql/generated";
 import { GET_CATEGORIES_WITH_PRODUCTS, GET_SINGLE_CATEGORY } from "lib/graphql/queries";
-import { Button } from "@chakra-ui/react";
-
 
 function SingleCategory({ category }: GetSingleCategoryQuery) {
   return (
@@ -13,10 +12,26 @@ function SingleCategory({ category }: GetSingleCategoryQuery) {
         <a>Go back</a>
       </NextLink>
       <h2>{category?.name}</h2>
+      {category?.image &&
+        <Image
+          height="100"
+          width="100"
+          src={`${process.env.NEXT_PUBLIC_HOST_URL}${category.image.url}`}
+          alt={`${category.name} category image`}
+        />
+      }
 
       {/* Display products of category */}
       {category?.products?.map((product: any) => (
         <li key={product.id}>
+          {product.image &&
+            <Image
+              height="100"
+              width="100"
+              src={`${process.env.NEXT_PUBLIC_HOST_URL}${product.image.url}`}
+              alt={`${product.name} product image`}
+            />
+          }
           <NextLink href={`/product/${product.id}`} passHref>
             <a><p>{product.name}</p></a>
           </NextLink>
