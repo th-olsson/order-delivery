@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { GetStaticPropsContext } from "next";
 import NextLink from "next/link";
+import Image from "next/image";
 import apolloClient from "lib/apolloClient";
 import { GetAllProductsQuery, GetSingleProductQuery } from "lib/graphql/generated";
 import { GET_SINGLE_PRODUCT, GET_ALL_PRODUCTS } from "lib/graphql/queries";
@@ -32,6 +33,14 @@ function SingleProduct({ product }: GetSingleProductQuery) {
       <NextLink href="/" passHref>
         <a>Go back</a>
       </NextLink>
+      {product?.image &&
+        <Image
+          height="100"
+          width="100"
+          src={`${process.env.NEXT_PUBLIC_HOST_URL}${product.image.url}`}
+          alt={`${product.name} product image`}
+        />
+      }
       <h2>{product?.name}</h2>
       <p>{product?.price} sek</p>
       <p>{product?.description}</p>
