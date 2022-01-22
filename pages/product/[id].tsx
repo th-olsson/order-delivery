@@ -1,15 +1,21 @@
+import { useContext } from "react";
 import { GetStaticPropsContext } from "next";
 import NextLink from "next/link";
 import apolloClient from "lib/apolloClient";
 import { GetAllProductsQuery, GetSingleProductQuery } from "lib/graphql/generated";
 import { GET_SINGLE_PRODUCT, GET_ALL_PRODUCTS } from "lib/graphql/queries";
 import { Button, useToast } from "@chakra-ui/react";
+import { CartContext } from 'contexts/CartContext';
 
 function SingleProduct({ product }: GetSingleProductQuery) {
+  const { addItem } = useContext(CartContext);
   const addCartToast = useToast();
+
   function addToCart() {
     // Add to local storage
-    
+
+    // Add to cart context
+    addItem(product?.id!, product?.name!, product?.price!);
 
     // Display a toast message
     addCartToast({
