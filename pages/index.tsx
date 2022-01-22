@@ -5,6 +5,8 @@ import Image from 'next/image';
 import apolloClient from "lib/apolloClient";
 import { GetCategoriesWithProductsQuery } from 'lib/graphql/generated';
 import { GET_CATEGORIES_WITH_PRODUCTS } from "lib/graphql/queries";
+import Product from 'components/product/Product';
+import Category from 'components/category/Category';
 
 const host = process.env.NEXT_PUBLIC_HOST_URL || '';
 console.log(host)
@@ -18,47 +20,29 @@ function Home({ categories }: GetCategoriesWithProductsQuery) {
       </Head>
       <Heading as="h1">Order delivery</Heading>
 
-      {/* TODO: make separate components */}
-      {categories?.map((category) => (
-        <div key={category.id}>
-          {/* TODO: don't display category if empty */}
-          <NextLink href={`/category/${category.id}`} passHref>
-            <ChakraLink>
-              <a><h2>{category.name}</h2></a>
-              {category.image &&
-                <Image
-                  height="100"
-                  width="100"
-                  src={`${host}${category.image.url}`}
-                  alt={`${category.name} category image`}
-                />
-              }
-            </ChakraLink>
-          </NextLink>
+      <ul>
+        {categories?.map((category) => (
+          <li key={category.id}>
+            <Category
+              page="home"
+              id={category.id}
+              name={category.name}
+              imageUrl={category.image?.url}
+            />
 
-          <ul>
-            {category.products?.map((product) => (
-              <li key={product.id}>
-                <NextLink href={`/product/${product.id}`} passHref>
-                  <ChakraLink>
-                    {product.image &&
-                      <Image
-                        height="100"
-                        width="100"
-                        src={`${host}${product.image.url}`}
-                        alt={`${product.name} product image`}
-                      >
-                      </Image>
-                    }
-                    <a><p>{product.name}</p></a>
-                  </ChakraLink>
-                </NextLink>
-                <p>{product.price}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+            <ul>
+              {category.products?.map(({ id, name, price, image }) => (
+                <li key={id}>
+                  <Product page='home' id={id}
+                    name={name}
+                    price={price}
+                    imageUrl={image?.url} />
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
     </>
   )
 }
