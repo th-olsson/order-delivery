@@ -14,9 +14,10 @@ export type Scalars = {
   Int: number;
   Float: number;
   DateTime: any;
-  Decimal: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any;
 };
 
 export type AuthenticatedItem = User;
@@ -24,6 +25,7 @@ export type AuthenticatedItem = User;
 export type Category = {
   __typename?: 'Category';
   id: Scalars['ID'];
+  image?: Maybe<ImageFieldOutput>;
   name?: Maybe<Scalars['String']>;
   products?: Maybe<Array<Product>>;
   productsCount?: Maybe<Scalars['Int']>;
@@ -43,6 +45,7 @@ export type CategoryProductsCountArgs = {
 };
 
 export type CategoryCreateInput = {
+  image?: InputMaybe<ImageFieldInput>;
   name?: InputMaybe<Scalars['String']>;
   products?: InputMaybe<ProductRelateToManyForCreateInput>;
 };
@@ -69,6 +72,7 @@ export type CategoryUpdateArgs = {
 };
 
 export type CategoryUpdateInput = {
+  image?: InputMaybe<ImageFieldInput>;
   name?: InputMaybe<Scalars['String']>;
   products?: InputMaybe<ProductRelateToManyForUpdateInput>;
 };
@@ -84,6 +88,17 @@ export type CategoryWhereInput = {
 
 export type CategoryWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
+};
+
+export type CloudImageFieldOutput = ImageFieldOutput & {
+  __typename?: 'CloudImageFieldOutput';
+  extension: ImageExtension;
+  filesize: Scalars['Int'];
+  height: Scalars['Int'];
+  id: Scalars['ID'];
+  ref: Scalars['String'];
+  url: Scalars['String'];
+  width: Scalars['Int'];
 };
 
 export type CreateInitialUserInput = {
@@ -103,17 +118,6 @@ export type DateTimeNullableFilter = {
   notIn?: InputMaybe<Array<Scalars['DateTime']>>;
 };
 
-export type DecimalFilter = {
-  equals?: InputMaybe<Scalars['Decimal']>;
-  gt?: InputMaybe<Scalars['Decimal']>;
-  gte?: InputMaybe<Scalars['Decimal']>;
-  in?: InputMaybe<Array<Scalars['Decimal']>>;
-  lt?: InputMaybe<Scalars['Decimal']>;
-  lte?: InputMaybe<Scalars['Decimal']>;
-  not?: InputMaybe<DecimalFilter>;
-  notIn?: InputMaybe<Array<Scalars['Decimal']>>;
-};
-
 export type IdFilter = {
   equals?: InputMaybe<Scalars['ID']>;
   gt?: InputMaybe<Scalars['ID']>;
@@ -123,6 +127,39 @@ export type IdFilter = {
   lte?: InputMaybe<Scalars['ID']>;
   not?: InputMaybe<IdFilter>;
   notIn?: InputMaybe<Array<Scalars['ID']>>;
+};
+
+export enum ImageExtension {
+  Gif = 'gif',
+  Jpg = 'jpg',
+  Png = 'png',
+  Webp = 'webp'
+}
+
+export type ImageFieldInput = {
+  ref?: InputMaybe<Scalars['String']>;
+  upload?: InputMaybe<Scalars['Upload']>;
+};
+
+export type ImageFieldOutput = {
+  extension: ImageExtension;
+  filesize: Scalars['Int'];
+  height: Scalars['Int'];
+  id: Scalars['ID'];
+  ref: Scalars['String'];
+  url: Scalars['String'];
+  width: Scalars['Int'];
+};
+
+export type IntFilter = {
+  equals?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<IntFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
 export type KeystoneAdminMeta = {
@@ -223,6 +260,17 @@ export enum KeystoneAdminUiSortDirection {
 export type KeystoneMeta = {
   __typename?: 'KeystoneMeta';
   adminMeta: KeystoneAdminMeta;
+};
+
+export type LocalImageFieldOutput = ImageFieldOutput & {
+  __typename?: 'LocalImageFieldOutput';
+  extension: ImageExtension;
+  filesize: Scalars['Int'];
+  height: Scalars['Int'];
+  id: Scalars['ID'];
+  ref: Scalars['String'];
+  url: Scalars['String'];
+  width: Scalars['Int'];
 };
 
 export type Mutation = {
@@ -690,15 +738,17 @@ export type Product = {
   category?: Maybe<Category>;
   description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  image?: Maybe<ImageFieldOutput>;
   name?: Maybe<Scalars['String']>;
-  price?: Maybe<Scalars['Decimal']>;
+  price?: Maybe<Scalars['Int']>;
 };
 
 export type ProductCreateInput = {
   category?: InputMaybe<CategoryRelateToOneForCreateInput>;
   description?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<ImageFieldInput>;
   name?: InputMaybe<Scalars['String']>;
-  price?: InputMaybe<Scalars['Decimal']>;
+  price?: InputMaybe<Scalars['Int']>;
 };
 
 export type ProductManyRelationFilter = {
@@ -734,8 +784,9 @@ export type ProductUpdateArgs = {
 export type ProductUpdateInput = {
   category?: InputMaybe<CategoryRelateToOneForUpdateInput>;
   description?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<ImageFieldInput>;
   name?: InputMaybe<Scalars['String']>;
-  price?: InputMaybe<Scalars['Decimal']>;
+  price?: InputMaybe<Scalars['Int']>;
 };
 
 export type ProductWhereInput = {
@@ -746,7 +797,7 @@ export type ProductWhereInput = {
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<IdFilter>;
   name?: InputMaybe<StringFilter>;
-  price?: InputMaybe<DecimalFilter>;
+  price?: InputMaybe<IntFilter>;
 };
 
 export type ProductWhereUniqueInput = {
@@ -1144,19 +1195,19 @@ export type UserWhereUniqueInput = {
 export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllProductsQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'Product', id: string, name?: string | null | undefined, description?: string | null | undefined, price?: any | null | undefined }> | null | undefined };
+export type GetAllProductsQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'Product', id: string, name?: string | null | undefined, description?: string | null | undefined, price?: number | null | undefined, image?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null | undefined }> | null | undefined };
 
 export type GetCategoriesWithProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCategoriesWithProductsQuery = { __typename?: 'Query', categories?: Array<{ __typename?: 'Category', id: string, name?: string | null | undefined, products?: Array<{ __typename?: 'Product', id: string, name?: string | null | undefined, description?: string | null | undefined, price?: any | null | undefined }> | null | undefined }> | null | undefined };
+export type GetCategoriesWithProductsQuery = { __typename?: 'Query', categories?: Array<{ __typename?: 'Category', id: string, name?: string | null | undefined, image?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null | undefined, products?: Array<{ __typename?: 'Product', id: string, name?: string | null | undefined, description?: string | null | undefined, price?: number | null | undefined, image?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null | undefined }> | null | undefined }> | null | undefined };
 
 export type GetSingleProductQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetSingleProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, name?: string | null | undefined, price?: any | null | undefined, description?: string | null | undefined } | null | undefined };
+export type GetSingleProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, name?: string | null | undefined, price?: number | null | undefined, description?: string | null | undefined, image?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null | undefined } | null | undefined };
 
 export type GetCategoriesNamesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1168,7 +1219,7 @@ export type GetSingleCategoryQueryVariables = Exact<{
 }>;
 
 
-export type GetSingleCategoryQuery = { __typename?: 'Query', category?: { __typename?: 'Category', id: string, name?: string | null | undefined, products?: Array<{ __typename?: 'Product', id: string, name?: string | null | undefined, price?: any | null | undefined }> | null | undefined } | null | undefined };
+export type GetSingleCategoryQuery = { __typename?: 'Query', category?: { __typename?: 'Category', id: string, name?: string | null | undefined, image?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null | undefined, products?: Array<{ __typename?: 'Product', id: string, name?: string | null | undefined, price?: number | null | undefined, image?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null | undefined }> | null | undefined } | null | undefined };
 
 
 export const GetAllProductsDocument = gql`
@@ -1178,6 +1229,9 @@ export const GetAllProductsDocument = gql`
     name
     description
     price
+    image {
+      url
+    }
   }
 }
     `;
@@ -1213,11 +1267,17 @@ export const GetCategoriesWithProductsDocument = gql`
   categories {
     id
     name
+    image {
+      url
+    }
     products {
       id
       name
       description
       price
+      image {
+        url
+      }
     }
   }
 }
@@ -1256,6 +1316,9 @@ export const GetSingleProductDocument = gql`
     name
     price
     description
+    image {
+      url
+    }
   }
 }
     `;
@@ -1327,10 +1390,16 @@ export const GetSingleCategoryDocument = gql`
   category(where: {id: $id}) {
     id
     name
+    image {
+      url
+    }
     products {
       id
       name
       price
+      image {
+        url
+      }
     }
   }
 }

@@ -5,7 +5,9 @@ query GetAllProducts {
     name
     description
     price
-    # images
+    image {
+      url
+    }
   }
 }
 
@@ -14,12 +16,17 @@ query GetCategoriesWithProducts {
   categories {
     id
     name
+    image {
+      url
+    }
     products {
       id
       name
       description
       price
-      # images
+      image {
+        url
+      }
     }
   }
 }
@@ -30,6 +37,9 @@ query GetSingleProduct($id: ID!) {
     name
     price
     description
+    image {
+      url
+    }
   }
 }
 
@@ -44,10 +54,16 @@ query GetSingleCategory($id: ID!) {
   category(where: { id: $id }) {
     id
     name
+    image {
+      url
+    }
     products {
       id
       name
       price
+      image {
+        url
+      }
     }
   }
 }

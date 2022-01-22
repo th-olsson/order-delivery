@@ -7,7 +7,9 @@ export const GET_ALL_PRODUCTS = gql`
       name
       description
       price
-      # images
+      image {
+        url
+      }
     }
   }
 `;
@@ -26,11 +28,16 @@ export const GET_CATEGORIES_WITH_PRODUCTS = gql`
     categories {
       id
       name
+      image {
+        url
+      }
       products {
         id
         name
         description
-        # images
+        image {
+          url
+        }
       }
     }
   }
@@ -43,6 +50,9 @@ export const GET_SINGLE_PRODUCT = gql`
       name
       price
       description
+      image {
+        url
+      }
     }
   }
 `;
@@ -52,10 +62,16 @@ export const GET_SINGLE_CATEGORY = gql`
     category(where: { id: $id }) {
       id
       name
+      image {
+        url
+      }
       products {
-        id,
-        name,
-        price,
+        id
+        name
+        price
+        image {
+          url
+        }
       }
     }
   }
