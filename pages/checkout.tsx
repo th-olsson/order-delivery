@@ -3,6 +3,7 @@ import {
   // useEffect,
   // useState
 } from 'react';
+import Image from 'next/image';
 // import { loadStripe } from '@stripe/stripe-js';
 import { Button, HStack, useToast } from '@chakra-ui/react';
 import { CartContext } from 'contexts/CartContext';
@@ -66,14 +67,20 @@ function StripeCheckout() {
       <h1>This is the checkout page</h1>
 
       {
-        cart.map(item => (
-          <div key={item.id}>
-            <p>{item.name}</p>
-            <p>{item.price}</p>
+        cart.map(({ id, name, price, quantity, imageUrl }) => (
+          <div key={id}>
+            <Image
+              height="100"
+              width="100"
+              src={`${process.env.NEXT_PUBLIC_HOST_URL}${imageUrl}`}
+              alt={`${name} product image`}
+            />
+            <p>{name}</p>
+            <p>{price}</p>
             <HStack>
-              <Button onClick={() => addItem(item.id, item.name, item.price)}>Add</Button>
-              <p>{item.quantity}</p>
-              <Button onClick={() => removeItem(item.id)}>Remove</Button>
+              <Button onClick={() => addItem(id, name, price, imageUrl)}>Add</Button>
+              <p>{quantity}</p>
+              <Button onClick={() => removeItem(id)}>Remove</Button>
             </HStack>
           </div>
         ))
