@@ -13,13 +13,13 @@ function Home({ categories }: GetCategoriesWithProductsQuery) {
       <Head>
         <title>Order delivery</title>
       </Head>
-      <Heading as="h1" textAlign='center'>Order delivery</Heading>
+      <Heading as="h1" textAlign='center' size='xl'>Blomsterbutiken Stockholm</Heading>
 
       <Ul styleType='none' m='auto'>
-        <VStack spacing={5}>
-          <Container>
+        <Container>
+          <VStack spacing={4}>
             {categories?.map((category) => (
-              <Li key={category.id}>
+              <Li key={category.id} w='full'>
                 <Category
                   page="home"
                   id={category.id}
@@ -42,8 +42,8 @@ function Home({ categories }: GetCategoriesWithProductsQuery) {
                 </Ul>
               </Li>
             ))}
-          </Container>
-        </VStack>
+          </VStack>
+        </Container>
       </Ul>
     </>
   )

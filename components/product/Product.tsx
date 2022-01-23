@@ -1,10 +1,12 @@
 import NextLink from "next/link";
-import Image from "next/image";
+import NextImage from "next/image";
 import {
   Link as ChakraLink,
   Box,
   Heading,
-  Text
+  Text,
+  Container,
+  Image,
 } from "@chakra-ui/react";
 
 interface ProductProps {
@@ -26,8 +28,9 @@ function Product({ page, id, name, price, description, imageUrl }: ProductProps)
             <ChakraLink>
               {imageUrl &&
                 <Image
-                  height="100"
-                  width="100"
+                  h='20vh'
+                  w='100%'
+                  fit='cover'
                   src={`${host}${imageUrl}`}
                   alt={`${name} product image`}
                 >
