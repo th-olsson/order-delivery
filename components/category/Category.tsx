@@ -1,6 +1,10 @@
 import NextLink from "next/link";
 import Image from "next/image";
-import { Link as ChakraLink } from "@chakra-ui/react";
+import {
+  Link as ChakraLink,
+  Heading,
+  Box,
+} from "@chakra-ui/react";
 
 interface CategoryProps {
   page: 'home' | 'category' | 'product' | 'cart' | 'checkout';
@@ -14,19 +18,21 @@ function Category({ page, id, name, imageUrl }: CategoryProps) {
   return (
     <>
       {page === 'home' &&
-        <NextLink href={`/category/${id}`} passHref>
-          <ChakraLink>
-            <h2>{name}</h2>
-            {imageUrl &&
-              <Image
-                height="100"
-                width="100"
-                src={`${host}${imageUrl}`}
-                alt={`${name} category image`}
-              />
-            }
-          </ChakraLink>
-        </NextLink>
+        <Box>
+          <NextLink href={`/category/${id}`} passHref>
+            <ChakraLink>
+              <Heading as='h3'>{name}</Heading>
+              {imageUrl &&
+                <Image
+                  height="100"
+                  width="100"
+                  src={`${host}${imageUrl}`}
+                  alt={`${name} category image`}
+                />
+              }
+            </ChakraLink>
+          </NextLink>
+        </Box>
       }
     </>
   );

@@ -1,6 +1,11 @@
 import NextLink from "next/link";
 import Image from "next/image";
-import { Link as ChakraLink, Box } from "@chakra-ui/react";
+import {
+  Link as ChakraLink,
+  Box,
+  Heading,
+  Text
+} from "@chakra-ui/react";
 
 interface ProductProps {
   page: 'home' | 'category' | 'product' | 'cart' | 'checkout';
@@ -17,7 +22,6 @@ function Product({ page, id, name, price, description, imageUrl }: ProductProps)
     <>
       {page === 'home' &&
         <Box>
-          <p>{description}</p>
           <NextLink href={`/product/${id}`} passHref>
             <ChakraLink>
               {imageUrl &&
@@ -29,10 +33,10 @@ function Product({ page, id, name, price, description, imageUrl }: ProductProps)
                 >
                 </Image>
               }
-              <p>{name}</p>
+              <Heading as='h4' size='sm'>{name}</Heading>
             </ChakraLink>
           </NextLink>
-          <p>{price} sek</p>
+          <Text>{price} sek</Text>
         </Box>
       }
     </>
