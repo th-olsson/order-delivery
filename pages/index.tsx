@@ -1,4 +1,4 @@
-import { Heading, UnorderedList as Ul, ListItem as Li, VStack, HStack, Container } from '@chakra-ui/react';
+import { Heading, UnorderedList as Ul, ListItem as Li, VStack, HStack, Container, Text, SimpleGrid, Box } from '@chakra-ui/react';
 import Head from 'next/head'
 import apolloClient from "lib/apolloClient";
 import { GetCategoriesWithProductsQuery } from 'lib/graphql/generated';
@@ -11,13 +11,31 @@ function Home({ categories }: GetCategoriesWithProductsQuery) {
   return (
     <>
       <Head>
-        <title>Order delivery</title>
+        <title>Blommis blommor - Skicka blommor inom Stockholm</title>
       </Head>
-      <Heading as="h1" textAlign='center' size='xl'>Blomsterbutiken Stockholm</Heading>
 
-      <Ul styleType='none' m='auto'>
-        <Container>
-          <VStack spacing={4}>
+      <Box
+        borderRadius='3xl'
+        ml='5'
+        mr='5'
+        pl='15'
+        pr='15'
+        pt='4rem'
+      >
+        <Container pt='5' pb='5'>
+          <Heading as="h1"
+            textAlign='center'
+            fontStyle='italic'
+            size='xl'
+            pb='5'
+          >Skicka blommor inom Stockholm</Heading>
+          <Text fontSize='xl' textAlign='center'>
+            Välkommen till Blommis blommor! <br /> Här kan du beställa blomsterbud. <br /> Vi levererar till adresser inom Stockholm.
+          </Text>
+        </Container>
+
+        <Ul styleType='none' m='auto'>
+          <VStack spacing={4} justifyItems='center'>
             {categories?.map((category) => (
               <Li key={category.id} w='full'>
                 <Category
@@ -28,23 +46,28 @@ function Home({ categories }: GetCategoriesWithProductsQuery) {
                 />
 
                 <Ul styleType='none' m='auto'>
-                  <HStack justifyContent='start'>
+                  <SimpleGrid
+                    columns={{ sm: 2, md: 2, lg: 3, xl: 4 }}
+                    spacingX='10'
+                  >
                     {category.products?.map(({ id, name, price, image }) => (
-                      <Li key={id}>
-                        <Product page='home' id={id}
+                      <Li key={id} pb='10' pl='25' pr='25'>
+                        <Product
+                          page='home'
+                          id={id}
                           name={name}
                           price={price}
                           imageUrl={image?.url}
                         />
                       </Li>
                     ))}
-                  </HStack>
+                  </SimpleGrid>
                 </Ul>
               </Li>
             ))}
           </VStack>
-        </Container>
-      </Ul>
+        </Ul>
+      </Box>
     </>
   )
 }

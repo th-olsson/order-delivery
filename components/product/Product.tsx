@@ -1,5 +1,4 @@
 import NextLink from "next/link";
-import NextImage from "next/image";
 import {
   Link as ChakraLink,
   Box,
@@ -23,23 +22,38 @@ function Product({ page, id, name, price, description, imageUrl }: ProductProps)
   return (
     <>
       {page === 'home' &&
-        <Box>
+        <Box
+          _hover={
+            {
+              border: 'solid 1px tomato'
+            }
+          }
+          _focusWithin={
+            { border: 'solid 1px tomato' }
+          }
+          bgColor='white'
+        >
           <NextLink href={`/product/${id}`} passHref>
             <ChakraLink>
               {imageUrl &&
                 <Image
-                  h='20vh'
+                  pl='1.5'
+                  pr='1.5'
+                  maxH='15em'
                   w='100%'
-                  fit='cover'
                   src={`${host}${imageUrl}`}
                   alt={`${name} product image`}
+                  objectFit='cover'
+                  borderRadius='xl'
                 >
                 </Image>
               }
-              <Heading as='h4' size='sm'>{name}</Heading>
+              <Container>
+                <Heading as='h4' size='sm' textAlign='center'>{name}</Heading>
+                <Text fontSize='lg' textAlign='center' fontFamily='monospace'>{price} sek</Text>
+              </Container>
             </ChakraLink>
           </NextLink>
-          <Text>{price} sek</Text>
         </Box>
       }
     </>

@@ -1,4 +1,4 @@
-import { Box, Container } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import Navbar from './nav/Navbar';
 
@@ -8,11 +8,8 @@ interface LayoutProps {
 
 function Layout({ children }: LayoutProps) {
   return (
-    <Box width="100%"
-    // maxW="sm" // Mobile view
-    >
+    <Box width="100%" bgColor='whitesmoke'>
       <Navbar />
-
       {children}
     </Box>
   );

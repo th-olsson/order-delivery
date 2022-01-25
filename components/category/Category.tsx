@@ -5,6 +5,7 @@ import {
   Heading,
   Box,
   Image,
+  Center,
 } from "@chakra-ui/react";
 
 interface CategoryProps {
@@ -19,19 +20,25 @@ function Category({ page, id, name, imageUrl }: CategoryProps) {
   return (
     <>
       {page === 'home' &&
-        <Box>
+        <Box textAlign='center'>
           <NextLink href={`/category/${id}`} passHref>
             <ChakraLink>
-              <Heading as='h3' size='lg'>{name}</Heading>
-              {imageUrl &&
-                <Image
-                  h='20vh'
-                  w='100%'
-                  fit='cover'
-                  src={`${host}${imageUrl}`}
-                  alt={`${name} category image`}
-                />
-              }
+              <Center
+                width='100%'
+                height='4em'
+              >
+                <Heading
+                  color='black.600'
+                  zIndex='3'
+                  as='h3'
+                  size='lg'
+                  borderRadius='lg'
+                  fontSize='xx-large'
+                  fontStyle='italic'
+                >
+                  {name}
+                </Heading>
+              </Center>
             </ChakraLink>
           </NextLink>
         </Box>
