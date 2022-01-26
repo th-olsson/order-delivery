@@ -1,54 +1,77 @@
 import { GetStaticPropsContext } from "next";
-import { Link as ChakraLink } from '@chakra-ui/react';
 import NextLink from "next/link";
-import Image from "next/image";
 import apolloClient from "lib/apolloClient";
+import {
+  Link as ChakraLink,
+  Box,
+  VStack,
+  UnorderedList as Ul,
+  ListItem as Li,
+  SimpleGrid,
+} from '@chakra-ui/react';
 import { GetCategoriesWithProductsQuery, GetSingleCategoryQuery } from "lib/graphql/generated";
 import { GET_CATEGORIES_WITH_PRODUCTS, GET_SINGLE_CATEGORY } from "lib/graphql/queries";
+import Category from "components/category/Category";
+import Product from "components/product/Product";
 
 function SingleCategory({ category }: GetSingleCategoryQuery) {
   return (
     <>
-      <NextLink href="/" passHref>
-        <ChakraLink>
-          <a>Go back</a>
-        </ChakraLink>
-      </NextLink>
-      <h2>{category?.name}</h2>
-      {category?.image &&
-        <Image
-          height="100"
-          width="100"
-          src={`${process.env.NEXT_PUBLIC_HOST_URL}${category.image.url}`}
-          alt={`${category.name} category image`}
-        />
-      }
+      <Box
+        borderRadius='3xl'
+        ml='5'
+        mr='5'
+        pl='15'
+        pr='15'
+        pt='4rem'
+      >
 
-      {/* Display products of category */}
-      {category?.products?.map((product: any) => (
-        <li key={product.id}>
-          <NextLink href={`/product/${product.id}`} passHref>
-            <ChakraLink>
-              {product.image &&
-                <Image
-                  height="100"
-                  width="100"
-                  src={`${process.env.NEXT_PUBLIC_HOST_URL}${product.image.url}`}
-                  alt={`${product.name} product image`}
-                />
-              }
-              <a><p>{product.name}</p></a>
-            </ChakraLink>
-          </NextLink>
-          <p>{product.price}</p>
-        </li>
-      ))}
+        {/* <NextLink href="/" passHref>
+          <ChakraLink>
+            <a>Go back</a>
+          </ChakraLink>
+        </NextLink> */}
+
+        <VStack spacing={4} justifyItems='center'>
+          <Category
+            page="category"
+            id={category?.id!}
+            name={category?.name}
+            imageUrl={category?.image?.url}
+          />
+
+          <Ul styleType='none' m='auto'>
+            <SimpleGrid
+              columns={{ sm: 2, md: 2, lg: 3, xl: 4 }}
+              spacingX={{ sm: 0, md: 10, lg: 10, xl: 10 }}
+
+            >
+              {category?.products?.map(({ id, name, price, image }) => (
+                <Li key={id} pb='10'
+                  pl={['1', '1.5', '25', '25']}
+                  pr={['1', '1.5', '25', '25']}
+                >
+                  <Product
+                    page='home'
+                    id={id}
+                    name={name}
+                    price={price}
+                    imageUrl={image?.url}
+                  />
+                </Li>
+              ))}
+            </SimpleGrid>
+          </Ul>
+
+        </VStack>
+      </Box>
     </>
   )
 }
 
 export async function getStaticPaths() {
   // TODO: Change to GET_CATEGORIES_SLUGS
+
   const { data: { categories } } = await apolloClient.query<GetCategoriesWithProductsQuery>({
     query: GET_CATEGORIES_WITH_PRODUCTS,
   });

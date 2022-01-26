@@ -1,4 +1,13 @@
-import { Heading, UnorderedList as Ul, ListItem as Li, VStack, HStack, Container, Text, SimpleGrid, Box } from '@chakra-ui/react';
+import {
+  Heading,
+  UnorderedList as Ul,
+  ListItem as Li,
+  VStack,
+  Container,
+  Text,
+  SimpleGrid,
+  Box
+} from '@chakra-ui/react';
 import Head from 'next/head'
 import apolloClient from "lib/apolloClient";
 import { GetCategoriesWithProductsQuery } from 'lib/graphql/generated';
@@ -48,10 +57,14 @@ function Home({ categories }: GetCategoriesWithProductsQuery) {
                 <Ul styleType='none' m='auto'>
                   <SimpleGrid
                     columns={{ sm: 2, md: 2, lg: 3, xl: 4 }}
-                    spacingX='10'
+                    spacingX={{ sm: 0, md: 10, lg: 10, xl: 10 }}
                   >
                     {category.products?.map(({ id, name, price, image }) => (
-                      <Li key={id} pb='10' pl='25' pr='25'>
+                      <Li key={id}
+                        pb='10'
+                        pl={['1', '1.5', '25', '25']}
+                        pr={['1', '1.5', '25', '25']}
+                      >
                         <Product
                           page='home'
                           id={id}

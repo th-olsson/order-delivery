@@ -1,10 +1,8 @@
 import NextLink from "next/link";
-import NextImage from "next/image";
 import {
   Link as ChakraLink,
   Heading,
   Box,
-  Image,
   Center,
 } from "@chakra-ui/react";
 
@@ -19,7 +17,7 @@ const host = process.env.NEXT_PUBLIC_HOST_URL || '';
 function Category({ page, id, name, imageUrl }: CategoryProps) {
   return (
     <>
-      {page === 'home' &&
+      {(page === 'home' || page === 'category') &&
         <Box textAlign='center'>
           <NextLink href={`/category/${id}`} passHref>
             <ChakraLink>
