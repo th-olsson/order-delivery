@@ -1,13 +1,14 @@
 import { useContext } from "react";
 import { GetStaticPropsContext } from "next";
 import NextLink from "next/link";
-import Image from "next/image";
 import apolloClient from "lib/apolloClient";
 import { GetAllProductsQuery, GetSingleProductQuery } from "lib/graphql/generated";
 import { GET_SINGLE_PRODUCT, GET_ALL_PRODUCTS } from "lib/graphql/queries";
-import { Button, useToast } from "@chakra-ui/react";
+import { Box, Button, Center, useToast, VStack, Link as ChakraLink, HStack, Text, Container, SimpleGrid } from "@chakra-ui/react";
 import { CartContext } from 'contexts/CartContext';
+import Product from "components/product/Product";
 
+const host = process.env.NEXT_PUBLIC_HOST_URL || '';
 function SingleProduct({ product }: GetSingleProductQuery) {
   const { addItem } = useContext(CartContext);
   const addCartToast = useToast();
@@ -20,32 +21,49 @@ function SingleProduct({ product }: GetSingleProductQuery) {
 
     // Display a toast message
     addCartToast({
-      title: `${product?.name} has been added to your cart.`,
-      description: "Go to checkout.",
+      title: `${product?.name} lades till i din varukorg.`,
       status: 'success',
-      duration: 9000,
+      duration: 2500,
       isClosable: true,
     });
   }
 
   return (
     <>
-      <NextLink href="/" passHref>
-        <a>Go back</a>
-      </NextLink>
-      {product?.image &&
-        <Image
-          height="100"
-          width="100"
-          src={`${process.env.NEXT_PUBLIC_HOST_URL}${product.image.url}`}
-          alt={`${product.name} product image`}
-        />
-      }
-      <h2>{product?.name}</h2>
-      <p>{product?.price} sek</p>
-      <p>{product?.description}</p>
-      <Button>Order now</Button>
-      <Button onClick={addToCart}>Add to cart</Button>
+      <Box
+        borderRadius='3xl'
+        ml='5'
+        mr='5'
+        pl='15'
+        pr='15'
+        pt='4rem'
+      >
+        <NextLink href="/" passHref>
+          <a>Go back</a>
+        </NextLink>
+
+        <VStack>
+          <Product
+            page='product'
+            id={product?.id!}
+            name={product?.name}
+            price={product?.price}
+            imageUrl={product?.image?.url}
+          />
+          <Button
+            onClick={addToCart}
+            bgColor='purple.100'
+            _hover={
+              { bgColor: 'purple.200' }
+            }
+          >Lägg till i varukorgen</Button>
+          <Container>
+            <Text>
+              {product?.description}
+            </Text>
+          </Container>
+        </VStack>
+      </Box>
     </>
   )
 }

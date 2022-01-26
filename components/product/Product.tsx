@@ -25,7 +25,7 @@ function Product({ page, id, name, price, description, imageUrl }: ProductProps)
         <Box
           _hover={
             {
-              border: 'solid 1px tomato'
+              boxShadow: '0px 0px 0px 1px tomato'
             }
           }
           _focusWithin={
@@ -55,6 +55,32 @@ function Product({ page, id, name, price, description, imageUrl }: ProductProps)
             </ChakraLink>
           </NextLink>
         </Box>
+      }
+
+      {page === 'product' &&
+        <>
+          <NextLink href={`/product/${id}`} passHref>
+            <ChakraLink>
+              {imageUrl &&
+                <Image
+                  pl='1.5'
+                  pr='1.5'
+                  maxH='15em'
+                  w='100%'
+                  src={`${host}${imageUrl}`}
+                  alt={`${name} product image`}
+                  objectFit='cover'
+                  borderRadius='xl'
+                >
+                </Image>
+              }
+              <Container>
+                <Heading as='h4' size='sm' textAlign='center'>{name}</Heading>
+                <Text fontSize='lg' textAlign='center' fontFamily='monospace'>{price} sek</Text>
+              </Container>
+            </ChakraLink>
+          </NextLink>
+        </>
       }
     </>
   )
