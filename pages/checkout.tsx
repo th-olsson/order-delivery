@@ -1,33 +1,15 @@
 import {
   useContext,
-  // useEffect,
-  // useState
 } from 'react';
 import Image from 'next/image';
 import Head from 'next/head';
-// import { loadStripe } from '@stripe/stripe-js';
 import { Box, Button, Container, HStack, useToast, VStack, Text, Divider } from '@chakra-ui/react';
 import { CartContext } from 'contexts/CartContext';
 
 function StripeCheckout() {
-  // const [publishableKey, setPublishableKey] = useState('');
   const { cart, removeItem, addItem } = useContext(CartContext);
 
   const toast = useToast();
-
-  // useEffect(() => {
-  //   fetch('/api/stripe/keys', {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setPublishableKey(data.publishableKey);
-  //     })
-  //     .catch(err => console.log(err));
-  // });
 
   const checkOut = async () => {
     const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -52,16 +34,10 @@ function StripeCheckout() {
       })
     });
     const data = await response.json();
-
-    window.location.href = data.url; // Redirect to stripe hosted prebuilt checkout
+    
+    // Redirect to stripe hosted prebuilt checkout
+    window.location.href = data.url;
   }
-
-  // if (!publishableKey) {
-  //   console.log('loading');
-  //   return <div>Loading...</div>;
-  // }
-
-  // const stripe = loadStripe(publishableKey);
 
   return (
     <>
