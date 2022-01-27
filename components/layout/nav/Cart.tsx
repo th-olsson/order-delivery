@@ -14,12 +14,14 @@ import {
   HStack,
   Link as ChakraLink,
   VStack,
-  Center
+  Center,
+  Divider,
 } from '@chakra-ui/react'
 import { BsBasket3 } from 'react-icons/bs'
 import { CartContext } from 'contexts/CartContext';
 import NextLink from 'next/link';
 import Image from 'next/image';
+
 
 function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -41,6 +43,9 @@ function Cart() {
           }
           size="lg"
           variant='ghost'
+          _hover={{
+            bgColor: 'orange.50',
+          }}
         />
       </HStack>
       <Drawer
@@ -56,7 +61,7 @@ function Cart() {
             {cart.length > 0 ? (
               cart.map(({ id, name, price, quantity, imageUrl }) => (
                 <VStack className='cart-item' key={id}>
-                  <Text fontSize="2xl">{name} {price * quantity} </Text>
+                  <Text fontSize='xl' fontWeight='normal' fontStyle='italic' >{name} {price} kr</Text>
                   <HStack>
                     {imageUrl &&
                       <Image
@@ -66,9 +71,10 @@ function Cart() {
                         alt={`${name} product image`}
                       />}
                     <Button onClick={() => { removeItem(id) }}>-</Button>
-                    <Text>{quantity}</Text>
+                    <Text fontWeight='semibold'>{quantity}</Text>
                     <Button onClick={() => { addItem(id, name, price, imageUrl) }}>+</Button>
                   </HStack>
+                  <Divider />
                 </VStack>
               ))
             ) : (
@@ -78,14 +84,26 @@ function Cart() {
           <DrawerFooter>
             <VStack>
               <Center>
-                <Text fontSize='2xl'>
-                  Totalt pris: {cart.reduce((acc, item) => acc + item.price * item.quantity, 0)}
+                <Text fontSize='2xl' fontWeight='semibold'>
+                  Totalt: {cart.reduce((acc, item) => acc + item.price * item.quantity, 0)} kr
                 </Text>
               </Center>
               <HStack>
                 <NextLink href="/checkout" passHref>
                   <ChakraLink>
-                    Gå till betalning
+                    <Text
+                      fontSize='lg'
+                      fontWeight='semibold'
+                      bgColor='orange.200'
+                      _hover={{
+                        bgColor: 'orange.100',
+                      }}
+                      px='2'
+                      py='1'
+                      rounded='sm'
+                    >
+                      Gå till kassan
+                    </Text>
                   </ChakraLink>
                 </NextLink>
                 <Button variant='outline' mr={3} onClick={onClose}>
