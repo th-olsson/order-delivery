@@ -279,8 +279,6 @@ export type Mutation = {
   createCategories?: Maybe<Array<Maybe<Category>>>;
   createCategory?: Maybe<Category>;
   createInitialUser: UserAuthenticationWithPasswordSuccess;
-  createOrderStop?: Maybe<OrderStop>;
-  createOrderStops?: Maybe<Array<Maybe<OrderStop>>>;
   createPost?: Maybe<Post>;
   createPosts?: Maybe<Array<Maybe<Post>>>;
   createProduct?: Maybe<Product>;
@@ -293,8 +291,6 @@ export type Mutation = {
   createUsers?: Maybe<Array<Maybe<User>>>;
   deleteCategories?: Maybe<Array<Maybe<Category>>>;
   deleteCategory?: Maybe<Category>;
-  deleteOrderStop?: Maybe<OrderStop>;
-  deleteOrderStops?: Maybe<Array<Maybe<OrderStop>>>;
   deletePost?: Maybe<Post>;
   deletePosts?: Maybe<Array<Maybe<Post>>>;
   deleteProduct?: Maybe<Product>;
@@ -308,8 +304,6 @@ export type Mutation = {
   endSession: Scalars['Boolean'];
   updateCategories?: Maybe<Array<Maybe<Category>>>;
   updateCategory?: Maybe<Category>;
-  updateOrderStop?: Maybe<OrderStop>;
-  updateOrderStops?: Maybe<Array<Maybe<OrderStop>>>;
   updatePost?: Maybe<Post>;
   updatePosts?: Maybe<Array<Maybe<Post>>>;
   updateProduct?: Maybe<Product>;
@@ -341,16 +335,6 @@ export type MutationCreateCategoryArgs = {
 
 export type MutationCreateInitialUserArgs = {
   data: CreateInitialUserInput;
-};
-
-
-export type MutationCreateOrderStopArgs = {
-  data: OrderStopCreateInput;
-};
-
-
-export type MutationCreateOrderStopsArgs = {
-  data: Array<OrderStopCreateInput>;
 };
 
 
@@ -414,16 +398,6 @@ export type MutationDeleteCategoryArgs = {
 };
 
 
-export type MutationDeleteOrderStopArgs = {
-  where: OrderStopWhereUniqueInput;
-};
-
-
-export type MutationDeleteOrderStopsArgs = {
-  where: Array<OrderStopWhereUniqueInput>;
-};
-
-
 export type MutationDeletePostArgs = {
   where: PostWhereUniqueInput;
 };
@@ -482,17 +456,6 @@ export type MutationUpdateCategoriesArgs = {
 export type MutationUpdateCategoryArgs = {
   data: CategoryUpdateInput;
   where: CategoryWhereUniqueInput;
-};
-
-
-export type MutationUpdateOrderStopArgs = {
-  data: OrderStopUpdateInput;
-  where: OrderStopWhereUniqueInput;
-};
-
-
-export type MutationUpdateOrderStopsArgs = {
-  data: Array<OrderStopUpdateArgs>;
 };
 
 
@@ -582,52 +545,6 @@ export enum OrderDirection {
   Asc = 'asc',
   Desc = 'desc'
 }
-
-export type OrderStop = {
-  __typename?: 'OrderStop';
-  id: Scalars['ID'];
-  messageToCustomer?: Maybe<Scalars['String']>;
-  stopUntil?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-};
-
-export type OrderStopCreateInput = {
-  messageToCustomer?: InputMaybe<Scalars['String']>;
-  stopUntil?: InputMaybe<Scalars['DateTime']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']>;
-};
-
-export type OrderStopOrderByInput = {
-  id?: InputMaybe<OrderDirection>;
-  messageToCustomer?: InputMaybe<OrderDirection>;
-  stopUntil?: InputMaybe<OrderDirection>;
-  updatedAt?: InputMaybe<OrderDirection>;
-};
-
-export type OrderStopUpdateArgs = {
-  data: OrderStopUpdateInput;
-  where: OrderStopWhereUniqueInput;
-};
-
-export type OrderStopUpdateInput = {
-  messageToCustomer?: InputMaybe<Scalars['String']>;
-  stopUntil?: InputMaybe<Scalars['DateTime']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']>;
-};
-
-export type OrderStopWhereInput = {
-  AND?: InputMaybe<Array<OrderStopWhereInput>>;
-  NOT?: InputMaybe<Array<OrderStopWhereInput>>;
-  OR?: InputMaybe<Array<OrderStopWhereInput>>;
-  id?: InputMaybe<IdFilter>;
-  messageToCustomer?: InputMaybe<StringFilter>;
-  stopUntil?: InputMaybe<DateTimeNullableFilter>;
-  updatedAt?: InputMaybe<DateTimeNullableFilter>;
-};
-
-export type OrderStopWhereUniqueInput = {
-  id?: InputMaybe<Scalars['ID']>;
-};
 
 export type PasswordState = {
   __typename?: 'PasswordState';
@@ -811,9 +728,6 @@ export type Query = {
   categoriesCount?: Maybe<Scalars['Int']>;
   category?: Maybe<Category>;
   keystone: KeystoneMeta;
-  orderStop?: Maybe<OrderStop>;
-  orderStops?: Maybe<Array<OrderStop>>;
-  orderStopsCount?: Maybe<Scalars['Int']>;
   post?: Maybe<Post>;
   posts?: Maybe<Array<Post>>;
   postsCount?: Maybe<Scalars['Int']>;
@@ -847,24 +761,6 @@ export type QueryCategoriesCountArgs = {
 
 export type QueryCategoryArgs = {
   where: CategoryWhereUniqueInput;
-};
-
-
-export type QueryOrderStopArgs = {
-  where: OrderStopWhereUniqueInput;
-};
-
-
-export type QueryOrderStopsArgs = {
-  orderBy?: Array<OrderStopOrderByInput>;
-  skip?: Scalars['Int'];
-  take?: InputMaybe<Scalars['Int']>;
-  where?: OrderStopWhereInput;
-};
-
-
-export type QueryOrderStopsCountArgs = {
-  where?: OrderStopWhereInput;
 };
 
 
@@ -1068,18 +964,15 @@ export type UnavailableDate = {
   __typename?: 'UnavailableDate';
   date?: Maybe<Scalars['DateTime']>;
   id: Scalars['ID'];
-  message?: Maybe<Scalars['String']>;
 };
 
 export type UnavailableDateCreateInput = {
   date?: InputMaybe<Scalars['DateTime']>;
-  message?: InputMaybe<Scalars['String']>;
 };
 
 export type UnavailableDateOrderByInput = {
   date?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
-  message?: InputMaybe<OrderDirection>;
 };
 
 export type UnavailableDateUpdateArgs = {
@@ -1089,7 +982,6 @@ export type UnavailableDateUpdateArgs = {
 
 export type UnavailableDateUpdateInput = {
   date?: InputMaybe<Scalars['DateTime']>;
-  message?: InputMaybe<Scalars['String']>;
 };
 
 export type UnavailableDateWhereInput = {
@@ -1098,7 +990,6 @@ export type UnavailableDateWhereInput = {
   OR?: InputMaybe<Array<UnavailableDateWhereInput>>;
   date?: InputMaybe<DateTimeNullableFilter>;
   id?: InputMaybe<IdFilter>;
-  message?: InputMaybe<StringFilter>;
 };
 
 export type UnavailableDateWhereUniqueInput = {
