@@ -1,14 +1,13 @@
 import { useContext } from "react";
 import { GetStaticPropsContext } from "next";
-import NextLink from "next/link";
+import Head from "next/head";
 import apolloClient from "lib/apolloClient";
 import { GetAllProductsQuery, GetSingleProductQuery } from "lib/graphql/generated";
 import { GET_SINGLE_PRODUCT, GET_ALL_PRODUCTS } from "lib/graphql/queries";
-import { Box, Button, Center, useToast, VStack, Link as ChakraLink, HStack, Text, Container, SimpleGrid } from "@chakra-ui/react";
+import { Box, Button, useToast, VStack, Text, Container, } from "@chakra-ui/react";
 import { CartContext } from 'contexts/CartContext';
 import Product from "components/product/Product";
 
-const host = process.env.NEXT_PUBLIC_HOST_URL || '';
 function SingleProduct({ product }: GetSingleProductQuery) {
   const { addItem } = useContext(CartContext);
   const addCartToast = useToast();
@@ -30,6 +29,9 @@ function SingleProduct({ product }: GetSingleProductQuery) {
 
   return (
     <>
+      <Head>
+        <title>Skicka {product?.name} inom Stockholm | Blommis</title>
+      </Head>
       <Box
         borderRadius='3xl'
         ml='5'
@@ -38,10 +40,7 @@ function SingleProduct({ product }: GetSingleProductQuery) {
         pr='15'
         pt='4rem'
       >
-        <NextLink href="/" passHref>
-          <a>Go back</a>
-        </NextLink>
-
+        {/* TODO: Add breadcrumbs navigation  */}
         <VStack>
           <Product
             page='product'

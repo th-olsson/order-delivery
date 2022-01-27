@@ -4,6 +4,7 @@ import {
   // useState
 } from 'react';
 import Image from 'next/image';
+import Head from 'next/head';
 // import { loadStripe } from '@stripe/stripe-js';
 import { Box, Button, Container, HStack, useToast, VStack, Text, Divider } from '@chakra-ui/react';
 import { CartContext } from 'contexts/CartContext';
@@ -63,63 +64,68 @@ function StripeCheckout() {
   // const stripe = loadStripe(publishableKey);
 
   return (
-    <Box
-      borderRadius='3xl'
-      ml='5'
-      mr='5'
-      pl='15'
-      pr='15'
-      pt='4rem'
-    >
-      <Container>
-        <VStack>
-          {
-            cart.map(({ id, name, price, quantity, imageUrl }) => (
-              <VStack key={id} w='100%'>
-                <HStack>
-                  <Text fontSize='lg' fontWeight='medium' fontStyle='italic' >{name}</Text>
-                  <Text fontSize='lg' fontWeight='medium' fontStyle='italic' >{price} kr</Text>
-                </HStack>
-                <HStack justifyContent='space-evenly' w='100%'>
-                  <Image
-                    height="120"
-                    width="120"
-                    src={`${process.env.NEXT_PUBLIC_HOST_URL}${imageUrl}`}
-                    alt={`${name} product image`}
-                  />
+    <>
+      <Head>
+        <title>Kassa - Blommis</title>
+      </Head>
+      <Box
+        borderRadius='3xl'
+        ml='5'
+        mr='5'
+        pl='15'
+        pr='15'
+        pt='4rem'
+      >
+        <Container>
+          <VStack>
+            {
+              cart.map(({ id, name, price, quantity, imageUrl }) => (
+                <VStack key={id} w='100%'>
                   <HStack>
-                    <Button onClick={() => removeItem(id)}>-</Button>
-                    <Text fontWeight='semibold'>{quantity}</Text>
-                    <Button onClick={() => addItem(id, name, price, imageUrl)}>+</Button>
+                    <Text fontSize='lg' fontWeight='medium' fontStyle='italic' >{name}</Text>
+                    <Text fontSize='lg' fontWeight='medium' fontStyle='italic' >{price} kr</Text>
                   </HStack>
-                </HStack>
-                <Divider />
-              </VStack>
-            ))
-          }
-
-        </VStack>
-        <VStack pb='2'>
-          <HStack>
-            <Text fontSize='2xl' fontWeight='semibold'>Totalt</Text>
-            <Text fontSize='2xl' fontWeight='bold'>
-              {cart.reduce((acc, item) => acc + item.price * item.quantity, 0)} kr
-            </Text>
-          </HStack>
-          <Button
-            onClick={checkOut}
-            size='lg'
-            rounded='sm'
-            bgColor='green.300'
-            _hover={
-              { bgColor: 'green.200' }
+                  <HStack justifyContent='space-evenly' w='100%'>
+                    <Image
+                      height="120"
+                      width="120"
+                      src={`${process.env.NEXT_PUBLIC_HOST_URL}${imageUrl}`}
+                      alt={`${name} product image`}
+                    />
+                    <HStack>
+                      <Button onClick={() => removeItem(id)}>-</Button>
+                      <Text fontWeight='semibold'>{quantity}</Text>
+                      <Button onClick={() => addItem(id, name, price, imageUrl)}>+</Button>
+                    </HStack>
+                  </HStack>
+                  <Divider />
+                </VStack>
+              ))
             }
-          >
-            Betala
-          </Button>
-        </VStack>
-      </Container>
-    </Box>
+
+          </VStack>
+          <VStack pb='2'>
+            <HStack>
+              <Text fontSize='2xl' fontWeight='semibold'>Totalt</Text>
+              <Text fontSize='2xl' fontWeight='bold'>
+                {cart.reduce((acc, item) => acc + item.price * item.quantity, 0)} kr
+              </Text>
+            </HStack>
+            <Button
+              onClick={checkOut}
+              size='lg'
+              rounded='sm'
+              bgColor='green.300'
+              _hover={
+                { bgColor: 'green.200' }
+              }
+            >
+              Betala
+            </Button>
+          </VStack>
+        </Container>
+      </Box>
+    </>
   );
 }
 

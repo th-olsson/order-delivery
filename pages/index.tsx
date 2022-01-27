@@ -20,9 +20,8 @@ function Home({ categories }: GetCategoriesWithProductsQuery) {
   return (
     <>
       <Head>
-        <title>Blommis blommor - Skicka blommor inom Stockholm</title>
+        <title>Skicka blommor inom Stockholm | Blommis</title>
       </Head>
-
       <Box
         borderRadius='3xl'
         ml='5'

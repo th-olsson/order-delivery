@@ -1,8 +1,7 @@
 import { GetStaticPropsContext } from "next";
-import NextLink from "next/link";
+import Head from "next/head";
 import apolloClient from "lib/apolloClient";
 import {
-  Link as ChakraLink,
   Box,
   VStack,
   UnorderedList as Ul,
@@ -17,6 +16,9 @@ import Product from "components/product/Product";
 function SingleCategory({ category }: GetSingleCategoryQuery) {
   return (
     <>
+      <Head>
+        <title>{category?.name} - Skicka blommor inom Stockholm | Blommis</title>
+      </Head>
       <Box
         borderRadius='3xl'
         ml='5'
@@ -26,12 +28,7 @@ function SingleCategory({ category }: GetSingleCategoryQuery) {
         pt='4rem'
       >
 
-        {/* <NextLink href="/" passHref>
-          <ChakraLink>
-            <a>Go back</a>
-          </ChakraLink>
-        </NextLink> */}
-
+        {/* TODO: Add breadcrumbs navigation  */}
         <VStack spacing={4} justifyItems='center'>
           <Category
             page="category"
