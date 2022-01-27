@@ -8,15 +8,15 @@ import { CartContextProvider } from 'contexts/CartContext'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider>
-      <ApolloProvider client={apolloClient}>
+    <ApolloProvider client={apolloClient}>
+      <ChakraProvider>
         <CartContextProvider>
           <Layout>
             <Component {...pageProps} />
           </Layout>
         </CartContextProvider>
-      </ApolloProvider>
-    </ChakraProvider>
+      </ChakraProvider>
+    </ApolloProvider>
   )
 }
 

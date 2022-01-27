@@ -8,10 +8,10 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
-  IconButton
+  IconButton,
 } from '@chakra-ui/react'
 import NavLink from './NavLink';
-import { AiOutlineMenu } from 'react-icons/ai';
+import { GrMenu } from 'react-icons/gr';
 import { useQuery } from '@apollo/client';
 import { GetCategoriesNamesQuery, GetCategoriesNamesQueryVariables } from 'lib/graphql/generated';
 import { GET_CATEGORIES_NAMES } from 'lib/graphql/queries';
@@ -29,9 +29,13 @@ function Menu() {
       <IconButton
         onClick={onOpen}
         aria-label="open menu"
-        icon={<AiOutlineMenu />}
+        icon={<GrMenu />}
+        size='lg'
+        variant='ghost'
+        _hover={{
+          bgColor: 'orange.50'
+        }}
       />
-
       <Drawer
         isOpen={isOpen}
         placement='left'
@@ -40,10 +44,11 @@ function Menu() {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Menu</DrawerHeader>
+          <DrawerHeader>Meny</DrawerHeader>
           <DrawerBody>
-            <NavLink href='/' text='Home' />
-            {loading && <div>Categories loading...</div>}
+            <NavLink href='/' text='Startsida' />
+            {loading && <div>Loading categories...</div>}
+            {/* TODO: Close menu on opening link */}
             {
               categories && categories?.map(category => (
                 <NavLink href={`/category/${category?.id}`} key={category?.id} text={category?.name!} />
@@ -51,9 +56,8 @@ function Menu() {
             }
           </DrawerBody>
           <DrawerFooter>
-            <Button onClick={() => { console.log(data); console.log('loading', loading); console.log('categories', categories) }}>Log test</Button>
             <Button variant='outline' mr={3} onClick={onClose}>
-              Close
+              Stäng
             </Button>
           </DrawerFooter>
         </DrawerContent>

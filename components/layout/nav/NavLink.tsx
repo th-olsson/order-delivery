@@ -3,7 +3,7 @@ import { Link, Text } from "@chakra-ui/react"
 
 interface NavLinkProps {
   href: string;
-  text: string;
+  text: string | undefined;
 }
 
 function NavLink({ href, text }: NavLinkProps) {

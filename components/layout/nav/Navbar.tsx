@@ -1,5 +1,4 @@
-import { Box, Center, HStack, Image, Link as ChakraLink, Text } from '@chakra-ui/react';
-import NextLink from 'next/link';
+import { Box, HStack } from '@chakra-ui/react';
 import NavLink from './NavLink';
 import Menu from './Menu';
 import Cart from './Cart';
@@ -7,7 +6,7 @@ import Cart from './Cart';
 function Nav() {
   return (
     <Box
-      bgColor='gray.100'
+      bgColor='orange.100'
       shadow='sm'
       display="flex"
       justifyContent="space-between"
@@ -20,6 +19,7 @@ function Nav() {
       <HStack>
         <Menu />
       </HStack>
+      {/* TODO: Replace with a logo */}
       <NavLink href="/" text="Blommis" />
       <Cart />
     </Box >

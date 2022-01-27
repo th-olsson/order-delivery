@@ -8,7 +8,7 @@ interface LayoutProps {
 
 function Layout({ children }: LayoutProps) {
   return (
-    <Box width="100%" bgColor='whitesmoke'>
+    <Box width="100%" bgColor='white'>
       <Navbar />
       {children}
     </Box>
