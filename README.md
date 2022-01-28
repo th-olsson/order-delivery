@@ -15,7 +15,7 @@ git clone https://github.com/th-olsson/order-delivery.git
 yarn
 ```
 
-- Set environment variables, see [sample.env](https://github.com/th-olsson/order-delivery/blob/main/samle.env)
+- Set environment variables, see [sample.env](https://github.com/th-olsson/order-delivery/blob/main/sample.env)
 
 ### Usage
 - Have the [backend](https://github.com/th-olsson/order-delivery-backend) up and running
