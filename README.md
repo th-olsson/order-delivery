@@ -1,8 +1,8 @@
 ## Getting Started
-
+Follow these steps to run this application locally
 ### Prerequisites
 - yarn
-- Install the [backend](https://github.com/th-olsson/order-delivery-backend)
+- Have [backend](https://github.com/th-olsson/order-delivery-backend) installed
 
 ### Installation
 - Clone repository
@@ -14,6 +14,8 @@ git clone https://github.com/th-olsson/order-delivery.git
 ```bash
 yarn
 ```
+
+- Set environment variables, see [sample.env](https://github.com/th-olsson/order-delivery/blob/main/samle.env)
 
 ### Usage
 - Have the [backend](https://github.com/th-olsson/order-delivery-backend) up and running
