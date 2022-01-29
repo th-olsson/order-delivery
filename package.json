@@ -2,9 +2,9 @@
   "name": "order-delivery",
   "private": true,
   "scripts": {
-    "dev": "set PORT=3737 && next dev",
+    "dev": "next dev",
     "build": "next build",
-    "start": "set PORT=3737 && next start",
+    "start": "next start",
     "lint": "next lint",
     "codegen": "graphql-codegen --config codegen.yml"
   },
