@@ -22,7 +22,7 @@ git clone https://github.com/th-olsson/order-delivery.git client
 ```
 - Install dependencies
 ```
-yarn
+yarn install
 ```
 
 - Set environment variables, see [sample.env](https://github.com/th-olsson/order-delivery/blob/main/sample.env)
@@ -38,4 +38,4 @@ yarn build
 yarn start
 ```
 
-- Open [http://localhost:3737](http://localhost:3737) to use the application
+- Open [http://localhost:3000](http://localhost:3000) to use the application
