@@ -12,6 +12,7 @@ A flower store is used in this example for ordering flower delivery.
 - Stripe
 ## Prerequisites
 - yarn
+- Stripe API keys
 - Have [backend](https://github.com/th-olsson/order-delivery-backend) installed
 ## Getting Started
 Follow these steps to run the application locally
